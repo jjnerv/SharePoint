@@ -79,7 +79,8 @@ async function getChoice(Select){
     }
 
     function AreaCausadora(props){
-        const listCausa = props.values.slice(0).reverse().map((data, index) =>
+        // const listCausa = props.values.slice(0).reverse().map((data, index) =>
+        const listCausa = props.values.map((data, index) =>
             <tr key={index.toString()}>
                 <td colspan="3">
                     <span class="arrow_box">
@@ -94,14 +95,14 @@ async function getChoice(Select){
                             >x</i>
                         }
                     </span>
-                    <table className={(props.show[index] ? 'show' : 'hidden')}>
+                    <table className={(props.show[index] ? 'table_causa show' : 'table_causa hidden')}>
                             <tr>
                                 <td valign="top" class="ms-formlabel">
                                     <h3 class="ms-standardheader">
-                                        <nobr>AreaCasudora {data}:</nobr>
-                                    </h3>
-                                    <select required name="Area"
-                                    onChange={props.field}
+                                        <nobr>AreaCausadora {data}:</nobr>
+                                    </h3> 
+                                    <select required id={`Area_${index}`} data-name="AreaCausadora" name={`AreaCausadora_${data}`}
+                                    // onBlur={props.field} 
                                     >
                                         <option value=""></option>
                                         <AreasDeReporte values={props.area} />
@@ -111,8 +112,8 @@ async function getChoice(Select){
                                     <h3 class="ms-standardheader">
                                         <nobr>EmpresaCausadora {data}:</nobr>
                                     </h3>
-                                    <select required 
-                                    // ref={props.field.textInput}
+                                    <select required id={`Empresa_${index}`} data-name="EmpresaCausadora" name={`EmpresaCausadora_${data}`}
+                                    // onBlur={props.field}
                                     >
                                         <option value=""></option>
                                         <AreasDeReporte values={props.empresa} />
@@ -124,8 +125,8 @@ async function getChoice(Select){
                                 <h3 class="ms-standardheader">
                                         <nobr>Causa {data}:</nobr>
                                     </h3>
-                                    <textarea row="6"
-                                    // ref={props.field.textInput}
+                                    <textarea row="6" id={`Causa_${index}`} data-name="Causa" name={`Causa_${data}`}
+                                    // onBlur={props.field}
                                     ></textarea>
                                 </td>
                             </tr>
@@ -189,13 +190,23 @@ class Registro extends React.Component {
 
     handleSubmit(event) {
         let payload = {};
+        let AreaPayload = [];
+
+       $('.table_causa').each(function(data, i){
+            AreaPayload.push({
+                AreaCausadora: $('#Area_'+data).val(),
+                EmpresaCausadora: $('#Empresa_'+data).val(),
+                Causa: $('#Causa_'+data).val(),
+            });
+       })
 
       for (var key in this.fields) {
         if (this.fields.hasOwnProperty(key)) {
             payload[key] = this.fields[key].current.value;
         }
       }
-      console.log('Payload', payload);          
+      console.log('Payload', payload);
+      console.log('AreaPayload: ', AreaPayload);
       event.preventDefault();
     }
 
@@ -223,19 +234,42 @@ class Registro extends React.Component {
 
         event.preventDefault();
     }
-
+  
     getValueFieldsArea(event) {
         const nameField = event.target.name
+        const id = event.target.id;
+        const that = this;
         const obj = {
+            id: event.target.id,
             [nameField]: event.target.value,
         }
 
-        this.setState((state, props) => ({
-            fieldsArea: state.fieldsArea.concat(obj)
-        }));
+        console.log('teste: ', this.state.fieldsArea);
+
+        if('undefined' !== typeof this.state.fieldsArea && this.state.fieldsArea.length > 0) {
+            that.state.fieldsArea.forEach((data, i) => {
+                if(data.id === id){
+                    data[nameField] = event.target.value;
+
+                    console.log('if: ', that.state.fieldsArea);
+                    that.setState((state, prop) => ({
+                        fieldsArea: state.fieldsArea[i].data
+                    }));
+                }
+            });
+        } else {
+            console.log('else: ', obj);
+            that.setState((state, props) => ({
+                fieldsArea: state.fieldsArea.concat(obj)
+            }));
+        }
+
+        // this.setState((state, props) => ({
+        //     fieldsArea: state.fieldsArea.concat(obj)
+        // }));
 
         setTimeout(() => {
-            console.log('state: ', this.state.fieldsArea);
+            console.log('state: ', that.state.fieldsArea);
         },100)        
     }
 
@@ -291,7 +325,7 @@ class Registro extends React.Component {
                 toggle={this.toggleTable} 
                 delete={this.deleteCausa} 
                 show={this.state.showItems} 
-                field={this.getValueFieldsArea}
+                // field={this.getValueFieldsArea}
                 empresa={this.state.Empresas} />
             <tr>
                 <td valign="top" class="ms-formlabel">
@@ -299,20 +333,20 @@ class Registro extends React.Component {
                         <nobr>Valor:</nobr>
                     </h3>
 
-                    <input required type="text" ref={this.fields.Valor} />
+                    <input required type="number" ref={this.fields.Valor} />
                 </td>
                 <td valign="top" class="ms-formlabel">
                     <h3 class="ms-standardheader">
                         <nobr>Valor0:</nobr>
                     </h3>
 
-                    <input required type="text" ref={this.fields.Valor0} />
+                    <input required type="number" ref={this.fields.Valor0} />
                 </td>
                 <td valign="top" class="ms-formlabel">
                     <h3 class="ms-standardheader">
                         <nobr>Resultado:</nobr>
                     </h3>
-                    <input disabled required type="text" ref={this.fields.Resultado} />
+                    <input disabled required type="number" ref={this.fields.Resultado} />
                 </td>
             </tr>            
             <tr>
