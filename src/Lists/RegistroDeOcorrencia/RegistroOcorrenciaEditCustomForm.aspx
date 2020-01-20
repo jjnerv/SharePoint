@@ -6,7 +6,7 @@
 <asp:Content ContentPlaceHolderId="PlaceHolderPageTitleInTitleArea" runat="server">
 	<span class="die">
 		<SharePoint:ListProperty Property="LinkTitle" runat="server" id="ID_LinkTitle"/>
-	</span>
+	</span> 
 </asp:Content>
 <asp:Content ContentPlaceHolderId="PlaceHolderPageImage" runat="server">
 	<img src="/_layouts/15/images/blank.gif?rev=47" width='1' height='1' alt="" data-accessibility-nocheck="true"/>
@@ -14,6 +14,12 @@
 <asp:Content ContentPlaceHolderId="PlaceHolderMain" runat="server">
 <SharePoint:UIVersionedContent UIVersion="4" runat="server">
 	<ContentTemplate>
+		<script src="../../SiteAssets/js/react.production.min.js"></script>
+		<script src="../../SiteAssets/js/react-dom.production.min.js"></script>
+
+		<!-- Retirar ao subir para Prod -->
+		<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
 	<div style="padding-left:5px">
 	</ContentTemplate>
 </SharePoint:UIVersionedContent>
@@ -74,7 +80,7 @@
 	</xsl:template>
 	<xsl:template name="dvt_1.body">
 		<xsl:param name="Rows"/>
-		<tr>
+		<!-- <tr>
 			<td class="ms-toolbar" nowrap="nowrap">
 				<table>
 					<tr>
@@ -89,7 +95,7 @@
 					</tr>
 				</table>
 			</td>
-		</tr>
+		</tr> -->
 		<tr>
 			<td class="ms-toolbar" nowrap="nowrap">
 				<SharePoint:FormToolBar runat="server" ControlMode="Edit"/>

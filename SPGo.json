@@ -2,7 +2,7 @@
     "sourceDirectory": "src",
     "sharePointSiteUrl": "https://jjnerd.sharepoint.com/sites/Dino",
     "publishingScope": "SaveOnly",
-    "remoteFolders": [
+    "remoteFolders": [  
         "*/**"
     ]
-}
+} 

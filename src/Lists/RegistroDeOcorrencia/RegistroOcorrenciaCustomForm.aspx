@@ -4,7 +4,7 @@
 	<SharePoint:ListFormPageTitle runat="server"/>
 </asp:Content>
 <asp:Content ContentPlaceHolderId="PlaceHolderPageTitleInTitleArea" runat="server">
-	<span class="die">
+	<span class="die">     
 		<SharePoint:ListProperty Property="LinkTitle" runat="server" id="ID_LinkTitle"/>
 	</span>
 </asp:Content>
@@ -14,6 +14,17 @@
 <asp:Content ContentPlaceHolderId="PlaceHolderMain" runat="server">
 <SharePoint:UIVersionedContent UIVersion="4" runat="server">
 	<ContentTemplate>
+		<link rel="stylesheet" type="text/css" href="../../SiteAssets/css/styleform.css">
+
+		<!-- Adicionar JQuery e Testar CrossBrowser -->
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>		
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.8.2/umd/popper.js"></script>
+		<script src="../../SiteAssets/js/react.production.min.js"></script>
+		<script src="../../SiteAssets/js/react-dom.production.min.js"></script>
+
+		<!-- Retirar ao subir para Prod -->
+		<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+		<script src="../../SiteAssets/js/registro.js" type="text/babel"></script>		
 	<div style="padding-left:5px">
 	</ContentTemplate>
 </SharePoint:UIVersionedContent>
@@ -77,7 +88,7 @@
 	</xsl:template>
 	<xsl:template name="dvt_1.body">
 		<xsl:param name="Rows"/>
-		<tr>
+		<!-- <tr>
 			<td class="ms-toolbar" nowrap="nowrap">
 				<table>
 					<tr>
@@ -92,7 +103,7 @@
 					</tr>
 				</table>
 			</td>
-		</tr>
+		</tr> -->
 		<tr>
 			<td class="ms-toolbar" nowrap="nowrap">
 				<SharePoint:FormToolBar runat="server" ControlMode="New"/>
@@ -100,7 +111,7 @@
 			</td>
 		</tr>
 		<xsl:call-template name="dvt_1.rowedit"/>
-		<tr>
+		<!-- <tr>
 			<td class="ms-toolbar" nowrap="nowrap">
 				<table>
 					<tr>
@@ -115,14 +126,16 @@
 					</tr>
 				</table>
 			</td>
-		</tr>
+		</tr> -->
 	</xsl:template>
 	<xsl:template name="dvt_1.rowedit">
 		<xsl:param name="Pos" select="position()"/>
 		<tr>
 			<td>
 				<table border="0" cellspacing="0" width="100%">
-					<tr>
+ 
+				<div id="root"></div> 
+					<!-- <tr>
 						<td width="190px" valign="top" class="ms-formlabel">
 							<H3 class="ms-standardheader">
 								<nobr>Título<span class="ms-formvalidation"> *</span>
@@ -274,7 +287,7 @@
 							<SharePoint:FormField runat="server" id="ff13{$Pos}" ControlMode="New" FieldName="Melhorias" __designer:bind="{ddwrt:DataBind('i',concat('ff13',$Pos),'Value','ValueChanged','ID',ddwrt:EscapeDelims(string(@ID)),'@Melhorias')}"/>
 							<SharePoint:FieldDescription runat="server" id="ff13description{$Pos}" FieldName="Melhorias" ControlMode="New"/>
 						</td>
-					</tr>
+					</tr> -->
 					<tr id="idAttachmentsRow">
 						<td nowrap="true" valign="top" class="ms-formlabel" width="20%">
 							<SharePoint:FieldLabel ControlMode="New" FieldName="Attachments" runat="server"/>
